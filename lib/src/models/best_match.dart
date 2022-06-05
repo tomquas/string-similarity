@@ -2,7 +2,7 @@ import 'rating.dart';
 
 /// Dice's Coefficient results
 class BestMatch {
-  BestMatch({required this.ratings, required this.bestMatch, required this.bestMatchIndex});
+  BestMatch({required this.ratings, required this.bestMatch});
 
   /// similarity rating for each target string
   List<Rating> ratings;
@@ -10,9 +10,9 @@ class BestMatch {
   /// specifies which target string was most similar to the main string
   Rating bestMatch;
 
-  /// which specifies the index of the bestMatch in the targetStrings array
-  int bestMatchIndex;
+  /// index of the best matchin the targetStrings array
+  int get bestMatchIndex => bestMatch.index;
 
   @override
-  String toString() => '$bestMatchIndex:${bestMatch.toString()}';
+  String toString() => bestMatch.toString();
 }

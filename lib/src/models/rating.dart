@@ -3,7 +3,7 @@ class Rating {
   Rating({
     required this.rating,
     required this.index,
-     this.target,
+    this.target,
   });
 
   /// reference text
@@ -14,5 +14,5 @@ class Rating {
   int index;
 
   @override
-  String toString() => '\'$target\'[$rating]';
+  String toString() => "'$target'[$rating]";
 }
