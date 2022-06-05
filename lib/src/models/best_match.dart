@@ -13,6 +13,11 @@ class BestMatch {
   /// index of the best matchin the targetStrings array
   int get bestMatchIndex => bestMatch.index;
 
+  List<Rating> sort() {
+    ratings.sort((r1, r2) => r2.rating.compareTo(r1.rating)); // descending
+    return ratings;
+  }
+
   @override
   String toString() => bestMatch.toString();
 }

@@ -3,8 +3,8 @@ import '../../string_similarity.dart';
 
 extension StringExtensions on String? {
   /// Returns a fraction between 0 and 1, which indicates the degree of similarity between the two strings. 0 indicates completely different strings, 1 indicates identical strings. The comparison is case-sensitive.
-  /// 
-  /// _(same as StringSimilarity.compareTwoStrings method)_
+  ///
+  /// _(same as StringSimilarity.compareStrings method)_
   ///
   /// ##### Arguments
   /// - other (String?): The second string
@@ -13,12 +13,12 @@ extension StringExtensions on String? {
   ///
   /// ##### Returns
   /// (number): A fraction from 0 to 1, both inclusive. Higher number indicates more similarity.
-  double similarityTo(String? other) => StringSimilarity.compareTwoStrings(this, other);
+  double similarityTo(String? other) => StringSimilarity.compareStrings(this, other);
 
   /// Compares mainString against each string in targetStrings.
-  /// 
+  ///
   /// _(same as StringSimilarity.findBestMatch method)_
-  /// 
+  ///
   /// ##### Arguments
   /// - targetStrings (List<String?>): Each string in this array will be matched against the main string.
   ///

@@ -22,7 +22,7 @@ In your code:
 ```dart
 import  'package:string_similarity/string_similarity.dart';
 
-var similarity = 'french'.similarityTo('quebec'); // or StringSimilarity.compareTwoStrings('french', 'quebec');
+var similarity = 'french'.similarityTo('quebec'); // or StringSimilarity.compareStrings('french', 'quebec');
 
 var matches = 'healed'.bestMatch(['edward', 'sealed', 'theatre']); // or StringSimilarity.findBestMatch('healed', ['edward', 'sealed', 'theatre']);
 ```
@@ -55,10 +55,10 @@ Order does not make a difference.
 'Olive-green table for sale, in extremely good condition.'.similarityTo('For sale: table in very good  condition, olive green in colour.'); // → 0.6060606060606061
 ```
 
-or you can use the `StringSimilarity.compareTwoStrings` static method
+or you can use the `StringSimilarity.compareStrings` static method
 
 ```dart
-StringSimilarity.compareTwoStrings('healed', 'sealed'); // → 0.8
+StringSimilarity.compareStrings('healed', 'sealed'); // → 0.8
 ```
 
 ### 'string'.bestMatch(targetStrings)
@@ -83,7 +83,7 @@ Compares `mainString` against each string in `targetStrings`.
   null
 ]);
 // →
-{ ratings:[ 
+{ ratings:[
      { target: 'For sale: green Subaru Impreza, 210,000 miles', rating: 0.2558139534883721 },
      { target: 'For sale: table in very good condition, olive green in colour.', rating: 0.6060606060606061 },
      { target: 'Wanted: mountain bike with at least 21 gears.', rating: 0.1411764705882353 },

@@ -2,7 +2,7 @@ import 'package:string_similarity/string_similarity.dart';
 
 void main() {
   // compare two strings
-  final comparison = 'healed'.similarityTo('sealed'); // or StringSimilarity.compareTwoStrings('healed', 'sealed')
+  final comparison = 'healed'.similarityTo('sealed'); // or StringSimilarity.compareStrings('healed', 'sealed')
   print(comparison); // → 0.8
 
   print(null.similarityTo(null)); // -> 1.0

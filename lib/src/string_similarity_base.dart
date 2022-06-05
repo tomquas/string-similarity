@@ -16,7 +16,7 @@ class StringSimilarity {
   ///
   /// ##### Returns
   /// (number): A fraction from 0 to 1, both inclusive. Higher number indicates more similarity.
-  static double compareTwoStrings(String? first, String? second) {
+  static double compareStrings(String? first, String? second) {
     // if both are null
     if(first == null && second == null){
       return 1;
@@ -89,7 +89,7 @@ class StringSimilarity {
 
     for (var i = 0; i < targetStrings.length; i++) {
       final currentTargetString = targetStrings[i];
-      final currentRating = compareTwoStrings(mainString, currentTargetString);
+      final currentRating = compareStrings(mainString, currentTargetString);
       final rating = Rating(target: currentTargetString, rating: currentRating, index: i);
       ratings.add(rating);
       if (currentRating > bestMatch.rating) {
@@ -98,5 +98,9 @@ class StringSimilarity {
     }
 
     return BestMatch(ratings: ratings, bestMatch: bestMatch);
+  }
+
+  static List<Rating> sortRatings(BestMatch bm) {
+    return bm.sort();
   }
 }
