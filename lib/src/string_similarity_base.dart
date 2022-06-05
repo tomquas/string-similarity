@@ -1,12 +1,13 @@
 import 'models/best_match.dart';
 import 'models/rating.dart';
 
+// ignore: avoid_classes_with_only_static_members
 /// Finds degree of similarity between two strings, based on Dice's Coefficient, which is mostly better than Levenshtein distance.
 class StringSimilarity {
   /// Returns a fraction between 0 and 1, which indicates the degree of similarity between the two strings. 0 indicates completely different strings, 1 indicates identical strings. The comparison is case-sensitive.
   ///
   /// _(same as 'string'.similarityTo extension method)_
-  /// 
+  ///
   /// ##### Arguments
   /// - first (String?): The first string
   /// - second (String?): The second string
@@ -24,9 +25,11 @@ class StringSimilarity {
     if(first == null || second == null){
       return 0;
     }
-    
-    first = first.replaceAll(RegExp(r'\s+\b|\b\s'), ''); // remove all whitespace
-    second = second.replaceAll(RegExp(r'\s+\b|\b\s'), ''); // remove all whitespace
+
+    // remove all whitespace
+    final noWhitespaceRE = RegExp(r'\s+\b|\b\s');
+    first = first.replaceAll(noWhitespaceRE, '');
+    second = second.replaceAll(noWhitespaceRE, '');
 
     // if both are empty strings
     if (first.isEmpty && second.isEmpty) {
@@ -73,7 +76,7 @@ class StringSimilarity {
   /// Compares mainString against each string in targetStrings
   ///
   /// _(same as 'string'.bestMatch extension method)_
-  /// 
+  ///
   /// ##### Arguments
   /// - mainString (String?): The string to match each target string against.
   /// - targetStrings (List<String?>): Each string in this array will be matched against the main string.
@@ -87,8 +90,8 @@ class StringSimilarity {
     for (var i = 0; i < targetStrings.length; i++) {
       final currentTargetString = targetStrings[i];
       final currentRating = compareTwoStrings(mainString, currentTargetString);
-      ratings.add(Rating(target: currentTargetString, rating: currentRating));
-      if (currentRating > ratings[bestMatchIndex].rating!) {
+      ratings.add(Rating(target: currentTargetString, rating: currentRating, index: i));
+      if (currentRating > ratings[bestMatchIndex].rating) {
         bestMatchIndex = i;
       }
     }
