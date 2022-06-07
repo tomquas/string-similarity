@@ -106,6 +106,7 @@ StringSimilarity.findBestMatch('Olive-green table for sale, in extremely good co
 ```
 
 ## :crystal_ball: Credit
+Based on the work of Jeremy Landon: https://pub.dev/packages/string_similarity. Thank you.
 
 **_based on 'string-similarity' Javascript project_** : [https://github.com/aceakash/string-similarity](https://github.com/aceakash/string-similarity)
 
