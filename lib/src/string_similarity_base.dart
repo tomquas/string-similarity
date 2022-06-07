@@ -26,10 +26,11 @@ class StringSimilarity {
       return 0;
     }
 
-    // remove all whitespace
+    // remove all whitespace, convert to lower case for better results
+    // on mixed case strings
     final noWhitespaceRE = RegExp(r'\s+\b|\b\s');
-    first = first.replaceAll(noWhitespaceRE, '');
-    second = second.replaceAll(noWhitespaceRE, '');
+    first = first.replaceAll(noWhitespaceRE, '').toLowerCase();
+    second = second.replaceAll(noWhitespaceRE, '').toLowerCase();
 
     // if both are empty strings
     if (first.isEmpty && second.isEmpty) {
