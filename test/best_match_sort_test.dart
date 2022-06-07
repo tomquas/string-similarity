@@ -24,7 +24,7 @@ void main() {
 
     test('sorts all ratings', () {
       final matches = StringSimilarity.findBestMatch('healed', _testData.map((TestData testEntry) => testEntry.sentenceA).toList());
-      final sorted = matches.sort();
+      final sorted = matches.ratings;
 
       for (var i = 0; i < sorted.length - 1; i++) {
         expect(sorted[i].rating, greaterThanOrEqualTo(sorted[i+1].rating));

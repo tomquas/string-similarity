@@ -80,10 +80,13 @@ class StringSimilarity {
   /// ##### Arguments
   /// - mainString (String?): The string to match each target string against.
   /// - targetStrings (List<String?>): Each string in this array will be matched against the main string.
+  /// - threshold (double): min rating to make it on the list
   ///
   /// ##### Returns
   /// (BestMatch): An object with a ratings property, which gives a similarity rating for each target string, a bestMatch property, which specifies which target string was most similar to the main string, and a bestMatchIndex property, which specifies the index of the bestMatch in the targetStrings array.
-  static BestMatch findBestMatch(String? mainString, List<String?> targetStrings) {
+  static BestMatch findBestMatch(String? mainString, List<String?> targetStrings, {
+    double threshold = 0.0, bool sortRatings = true
+  }) {
     final ratings = <Rating>[];
     var bestMatch = Rating(rating: 0.0, target: null, index: 0);
 
@@ -91,13 +94,19 @@ class StringSimilarity {
       final currentTargetString = targetStrings[i];
       final currentRating = compareStrings(mainString, currentTargetString);
       final rating = Rating(target: currentTargetString, rating: currentRating, index: i);
-      ratings.add(rating);
+      if (rating.rating >= threshold) {
+        ratings.add(rating);
+      }
       if (currentRating > bestMatch.rating) {
         bestMatch = rating;
       }
     }
 
-    return BestMatch(ratings: ratings, bestMatch: bestMatch);
+    final result = BestMatch(ratings: ratings, bestMatch: bestMatch);
+    if (sortRatings) {
+      result.sort();
+    }
+    return result;
   }
 
   static List<Rating> sortRatings(BestMatch bm) {
