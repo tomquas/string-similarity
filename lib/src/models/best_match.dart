@@ -1,19 +1,19 @@
 import 'rating.dart';
 
 /// Dice's Coefficient results
-class BestMatch {
-  BestMatch({required this.ratings, required this.bestMatch});
+class BestMatch<T> {
+  BestMatch({
+    required this.ratings,
+    required this.bestMatch,
+  });
 
   /// similarity rating for each target string
-  List<Rating> ratings;
+  List<Rating<T>> ratings;
 
   /// specifies which target string was most similar to the main string
-  Rating bestMatch;
+  Rating<T> bestMatch;
 
-  /// index of the best matchin the targetStrings array
-  int get bestMatchIndex => bestMatch.index;
-
-  List<Rating> sort() {
+  List<Rating<T>> sort() {
     ratings.sort((r1, r2) => r2.rating.compareTo(r1.rating)); // descending
     return ratings;
   }

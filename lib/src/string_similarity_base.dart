@@ -1,6 +1,8 @@
 import 'models/best_match.dart';
 import 'models/rating.dart';
 
+typedef SearchIndex<T> = String? Function(T?);
+
 // ignore: avoid_classes_with_only_static_members
 /// Finds degree of similarity between two strings, based on Dice's Coefficient, which is mostly better than Levenshtein distance.
 class StringSimilarity {
@@ -29,8 +31,8 @@ class StringSimilarity {
     // remove all whitespace, convert to lower case for better results
     // on mixed case strings
     final noWhitespaceRE = RegExp(r'\s+\b|\b\s');
-    first = first.replaceAll(noWhitespaceRE, '').toLowerCase();
-    second = second.replaceAll(noWhitespaceRE, '').toLowerCase();
+    first = first.replaceAll(noWhitespaceRE, '');
+    second = second.replaceAll(noWhitespaceRE, '');
 
     // if both are empty strings
     if (first.isEmpty && second.isEmpty) {
@@ -74,43 +76,50 @@ class StringSimilarity {
     return (2.0 * intersectionSize) / (first.length + second.length - 2);
   }
 
-  /// Compares mainString against each string in targetStrings
+  /// Compares term against each string in targetStrings
   ///
   /// _(same as 'string'.bestMatch extension method)_
   ///
   /// ##### Arguments
-  /// - mainString (String?): The string to match each target string against.
+  /// - term (String?): The string to match each target string against.
   /// - targetStrings (List<String?>): Each string in this array will be matched against the main string.
   /// - threshold (double): min rating to make it on the list
   ///
   /// ##### Returns
   /// (BestMatch): An object with a ratings property, which gives a similarity rating for each target string, a bestMatch property, which specifies which target string was most similar to the main string, and a bestMatchIndex property, which specifies the index of the bestMatch in the targetStrings array.
-  static BestMatch findBestMatch(String? mainString, List<String?> targetStrings, {
-    double threshold = 0.0, bool sortRatings = true
+  static BestMatch<T> findBestMatch<T>(String? term, List<T?> objects, SearchIndex<T>? extract, {
+    double threshold = 0.0,
+    bool sortRatings = true,
   }) {
-    final ratings = <Rating>[];
-    var bestMatch = Rating(rating: 0.0, target: null, index: 0);
+    final ratings = <Rating<T>>[];
+    Rating<T>? hit;
 
-    for (var i = 0; i < targetStrings.length; i++) {
-      final currentTargetString = targetStrings[i];
-      final currentRating = compareStrings(mainString, currentTargetString);
-      final rating = Rating(target: currentTargetString, rating: currentRating, index: i);
-      if (rating.rating >= threshold) {
+    for (var i = 0; i < objects.length; i++) {
+      final ref = objects[i];
+      final searchable = extract != null ? extract(ref) : ref as String?;
+      final diceCoeff = compareStrings(term, searchable);
+      if (diceCoeff >= threshold) {
+        // target is includude only for debugging purposes; clients should
+        // use ref to access the reference object
+        final rating = Rating(target: searchable, rating: diceCoeff, ref: ref);
         ratings.add(rating);
-      }
-      if (currentRating > bestMatch.rating) {
-        bestMatch = rating;
+
+        // do we have a new highscore?
+        hit = hit ?? rating;
+        if (diceCoeff > hit.rating) {
+          hit = rating;
+        }
       }
     }
 
-    final result = BestMatch(ratings: ratings, bestMatch: bestMatch);
+    final result = BestMatch<T>(ratings: ratings, bestMatch: hit!);
     if (sortRatings) {
       result.sort();
     }
     return result;
   }
 
-  static List<Rating> sortRatings(BestMatch bm) {
+  static List<Rating<T>> sortRatings<T>(BestMatch<T> bm) {
     return bm.sort();
   }
 }

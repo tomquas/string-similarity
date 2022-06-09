@@ -16,7 +16,7 @@ void main() {
     'Wanted: mountain bike with at least 21 gears.',
     null
   ];
-  final bestMatch = mainString.bestMatch(targetStrings); // or StringSimilarity.findBestMatch(mainString, targetStrings)
+  final bestMatch = mainString.bestMatch(targetStrings, null); // or StringSimilarity.findBestMatch(mainString, targetStrings)
   print(bestMatch); // → 1:'For sale: table in very good condition, olive green in colour.'[0.6060606060606061]
   print(bestMatch.ratings); // → ['For sale: green Subaru Impreza, 210,000 miles'[0.2558139534883721], 'For sale: table in very good condition, olive green in colour.'[0.6060606060606061], 'Wanted: mountain bike with at least 21 gears.'[0.1411764705882353]]
 }

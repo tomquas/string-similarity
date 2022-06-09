@@ -1,8 +1,8 @@
 /// Dice's Coefficient result
-class Rating {
+class Rating<T> {
   Rating({
     required this.rating,
-    required this.index,
+    this.ref,
     this.target,
   });
 
@@ -10,8 +10,8 @@ class Rating {
   String? target;
   /// between 0 and 1. 0 indicates completely different strings, 1 indicates identical strings.
   double rating;
-  // reference to index in list
-  int index;
+  // reference to original object
+  T? ref;
 
   @override
   String toString() => "'$target'[$rating]";
